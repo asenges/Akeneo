@@ -1,0 +1,18 @@
+services:
+    webkul_shopify.provider.form.job_instance:
+        class: '%pim_enrich.provider.form.job_instance.class%'
+        arguments:
+            -
+                '%webkul_shopify_connector.all_job_name%': pim-job-instance-shopify-export
+                '%webkul_shopify_connector.category_job_name%': pim-job-instance-shopify-category-export
+                '%webkul_shopify_connector.import_job_name%': pim-job-instance-shopify-import
+                product_model_import : pim-job-instance-shopify-import
+                product_import : pim-job-instance-shopify-import
+                family_import : pim-job-instance-shopify-common-import
+                category_import : pim-job-instance-shopify-common-import
+                family_variant_import: pim-job-instance-shopify-common-import
+                attribute_and_attribute_option_import : pim-job-instance-shopify-common-import
+                '%webkul_shopify_connector.product_only.job_name%': pim-job-instance-shopify-export
+                '%webkul_shopify_connector.import.data_mapping_job_name%': pim-job-instance-shopify-data-mapping-import
+        tags:
+            - { name: pim_enrich.provider.form }

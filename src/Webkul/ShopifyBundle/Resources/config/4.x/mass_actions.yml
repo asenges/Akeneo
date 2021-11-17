@@ -1,0 +1,25 @@
+parameters:
+    pim_datagrid.extension.mass_action.handler.webkul_shopify_export_mapping_delete.class:  Webkul\ShopifyBundle\Extension\MassAction\Handler\DeleteShopifyExportMappingsMassActionHandler
+  
+services:
+    pim_datagrid.extension.mass_action.handler.webkul_shopify_export_mapping_delete:
+        class: '%pim_datagrid.extension.mass_action.type.delete.class%'
+        public: true
+        shared: false
+        tags:
+            - { name: oro_datagrid.extension.mass_action.type, alias: webkul_shopify_connectors_export_mapping_mass_delete, type: delete }
+
+
+    webkul_shopify.controller.rest.mass_delete:
+        public: true
+        class: 'Webkul\ShopifyBundle\Extension\MassAction\Handler\Akeneo4\MassDeleteController'
+        arguments:
+            - '@webkul_shopify.export_mapping.repository'
+            - '@doctrine.orm.entity_manager'
+
+    webkul_shopify.export_mapping.controller.mass_action:
+        public: true
+        class: 'Webkul\ShopifyBundle\Extension\MassAction\Handler\Akeneo4\MassActionController'
+        arguments:
+            - '@pim_datagrid.extension.mass_action.dispatcher'
+            - '@oro_datagrid.mass_action.parameters_parser'       

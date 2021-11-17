@@ -1,0 +1,216 @@
+<!-- Styles for grid view -->
+<style>
+    .AknFormContainer-Mappings .field-input,.AknFormContainer-Mappings .field-header,.AknFormContainer-Mappings .header-col {
+        display: inline-block;
+        width: calc(33% - 2px);
+        border: none;
+    }
+    .AknFormContainer-Mappings .AknForm-header.widget-header {
+        margin-bottom: 10px;
+    }
+    .AknSettingField {
+        width: 80%;
+    }
+    .ak-margin-top {
+        margin-top: 10px;
+    }
+</style>
+
+<!-- Logs Setting -->
+<div class="AknFormContainer AknFormContainer--withPadding  AknFormContainer-Mappings shopify-importsettings" style="width: 100%">
+    <div class="AknSubsection-title">
+        <%- _.__('Logs Setting') %>
+    </div>
+    <div class="field-group">
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Enable API Request Logs') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                    <input id="pim_enrich_form_enable_request_log" type="checkbox" name="enable_request_log"  <% if(model['others']['enable_request_log'] == true) { %> checked <% } %> >
+                </div>
+            </div>
+
+        </div>
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Enable API Response Logs') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                    <input id="pim_enrich_form_enable_response_log" type="checkbox" name="enable_response_log"  <% if(model['others']['enable_response_log'] == true) { %> checked <% } %> >
+                </div>
+            </div>
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <a href="<%- log_path%>"> <%- _.__('Download log') %></a>
+                </label>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Tags Export Setting -->
+<div class="AknFormContainer AknFormContainer--withPadding  AknFormContainer-Mappings shopify-importsettings " style="width: 100%">
+    <div class="AknSubsection-title">
+        <%- _.__('Tags Export Setting') %>
+
+    </div>
+    <div class="field-group">
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Do you want to pull tags as') %> <a href="https://community.algolia.com/shopify/named-tags.html" target= "_blank" > <%- _.__('Named Tags') %> </a> <% _.__('?') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                    <input id="pim_enrich_form_enable_named_tags_attribute" type="checkbox" name="enable_named_tags_attribute"  <% if(model['others']['enable_named_tags_attribute'] == true) { %> checked <% } %> >
+                </div>
+            </div>
+        </div>
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Do you want to pull through the attribute name as well in tags ?') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                    <input id="pim_enrich_form_enable_tags_attribute" type="checkbox" name="enable_tags_attribute"  <% if(model['others']['enable_tags_attribute'] == true) { %> checked <% } %> >
+                </div>
+            </div>
+        </div>
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Do you want to pull through the Metric UNIT name as well in tags ?') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                    <input id="pim_enrich_form_enable_metric_tags_attribute" type="checkbox" name="enable_metric_tags_attribute"  <% if(model['others']['enable_metric_tags_attribute'] == true) { %> checked <% } %> >
+                </div>
+            </div>
+        </div>
+        <div class="AknFieldContainer tags-seprator">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Use Attribute Name Separator in Tags') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <% selectVal = model && typeof(model['others']) !== 'undefined' && typeof(model['others']['tag-seprator']) !== 'undefined' ?  model['others']['tag-seprator'] : '' %>
+                <select name="tag-seprator" id="pim_enrich_entity_form_tag-seprator" class="label-field AknSettingField">
+                    <% _.each(seprators, function(label, value) { %>
+                        <option value="<%- value %>" <% if(value === selectVal) { %>selected="selected"<% } %> >
+                            <%- label  %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Meta Field Export Setting -->
+<div class="AknFormContainer AknFormContainer--withPadding  AknFormContainer-Mappings shopify-importsettings " style="width: 100%">
+    <div class="AknSubsection-title">
+        <%- _.__('Meta Fields Export Setting') %>
+    </div>
+    <div class="field-group">
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <b>Use Key</b> for Meta Field as Attribute Code / Label
+                </label>
+            </div>
+            <div class="field-input">
+                <% selectVal = model && typeof(model['others']) !== 'undefined' && typeof(model['others']['metaFieldsKey']) !== 'undefined' ?  model['others']['metaFieldsKey'] : '' %>
+                <select name="metaFieldsKey" id="pim_enrich_entity_form_metaFieldsKey" class="label-field AknSettingField">
+                    <% _.each({'code': 'Attribute Code', 'label':'Attribute Label'}, function(label, value) { %>
+                        <option value="<%- value %>" <% if(value === selectVal) { %>selected="selected"<% } %> >
+                            <%- label  %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="field-group">
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <b>Use Namespace</b> for Meta Field as Attribute Group Code / global
+                </label>
+            </div>
+            <div class="field-input">
+                <% selectVal = model && typeof(model['others']) !== 'undefined' && typeof(model['others']['metaFieldsNameSpace']) !== 'undefined' ?  model['others']['metaFieldsNameSpace'] : '' %>
+                <select name="metaFieldsNameSpace" id="pim_enrich_entity_form_metaFieldsNameSpace" class="label-field AknSettingField">
+                    <% _.each({'code': 'Attribute Group Code', 'global':'global'}, function(label, value) { %>
+                        <option value="<%- value %>" <% if(value === selectVal) { %>selected="selected"<% } %> >
+                            <%- label  %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="field-group">
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Strip Tags of Meta Fields Value') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                    <input id="pim_enrich_form_enable_strip_tags_metafields" type="checkbox" name="strip_tags_metafields"  <% if(model['others']['strip_tags_metafields'] == true) { %> checked <% } %> >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Other Setting -->
+<div class="AknFormContainer AknFormContainer--withPadding  AknFormContainer-Mappings shopify-importsettings" style="width: 100%">
+    <div class="AknSubsection-title">
+        <%- _.__('Other Setting') %>
+    </div>
+    <div class="field-group">
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Remove Extra fractional Zeros of Metric Attribute Value (e.g. 201.2000 as 201.2) ') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                    <input id="pim_enrich_form_enable_roundof-attribute-value" type="checkbox" name="roundof-attribute-value"  <% if(model['others']['roundof-attribute-value'] == true) { %> checked <% } %> >
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="field-group">
+        <div class="AknFieldContainer">
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Value for Option Name as Attribute Label (By Default Attribute Code') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Label" data-off-label="Code">
+                    <input id="pim_enrich_form_enable_option_name_label" type="checkbox" name="option_name_label"  <% if(model['others']['option_name_label'] == true) { %> checked <% } %> >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

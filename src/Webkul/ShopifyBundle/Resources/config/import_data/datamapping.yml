@@ -1,0 +1,75 @@
+parameters:
+    webkul_shopify.connector.name: Shopify Connector
+    webkul_shopify_connector.import.data_mapping_job_name: shopify_import_data_mapping
+    webkul_shopify.product.data_mapping.import.step: 'Webkul\ShopifyBundle\Steps\BaseStep'
+    webkul_shopify.product.data_mapping.delete.step: 'Webkul\ShopifyBundle\Connector\DataMapping\DataMappingDeleteStep'
+
+    webkul_shopify.reader.data_mapping.product.class: Webkul\ShopifyBundle\Connector\DataMapping\DataMappingReader
+
+services:
+    # import shopify product and save in data mapping job
+    webkul_shopify_connector.import.data_mapping.job:
+        class: '%pim.batch_job.service.class%'
+        arguments:
+            - '%webkul_shopify_connector.import.data_mapping_job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.shopify_product.data_mapping.delete'
+                - '@webkul.step.shopify_product.data_mapping.import'
+
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_shopify.connector.name%', type: 'import' }
+
+  # import shopify product steps
+    webkul.step.shopify_product.data_mapping.import:
+        class: '%webkul_shopify.product.data_mapping.import.step%'
+        arguments:
+            - 'product_import'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@webkul_shopify.product.data_mapping.reader'    # DataMappingReader
+            - '@webkul_shopify.product.data_mapping.processor' # DataMappingProccesor
+            - '@webkul_shopify.product.data_mapping.writer'    # DataMappingWriter
+            - 50
+    webkul.step.shopify_product.data_mapping.delete:
+        class: '%webkul_shopify.product.data_mapping.delete.step%'
+        arguments:
+            - 'delete_mapping'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@shopify.connector.service'
+
+# import shopify product reader
+    webkul_shopify.product.data_mapping.reader:
+        class: '%webkul_shopify.reader.data_mapping.product.class%'
+        arguments:
+            - '@shopify.connector.service'
+            - '@doctrine.orm.entity_manager'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+            - '@akeneo_file_storage.repository.file_info'
+            - '%tmp_storage_dir%'
+
+# import shopify product processor
+
+    webkul_shopify.product.data_mapping.processor:
+        class: 'Webkul\ShopifyBundle\Connector\DataMapping\DataMappingProcessor'
+        arguments:
+           - '@shopify.connector.service'
+
+# import shopify product writer
+
+    webkul_shopify.product.data_mapping.writer:
+      class: 'Webkul\ShopifyBundle\Connector\DataMapping\DataMappingWriter'
+      arguments:
+          - '@shopify.connector.service'
+
+#job parameter
+
+    webkul_shopify_connector.job.job_parameters.shopify_import_data_mapping:
+        class: 'Webkul\ShopifyBundle\JobParameters\ShopifyDataMappingImport'
+        arguments:
+            - ['%webkul_shopify_connector.import.data_mapping_job_name%']
+        tags:
+            - { name: akeneo_batch.job.job_parameters.constraint_collection_provider }
+            - { name: akeneo_batch.job.job_parameters.default_values_provider }

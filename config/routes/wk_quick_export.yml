@@ -1,0 +1,3 @@
+wk_quick_expoort:
+    resource: "@QuickExportConfiguratorBundle/Resources/config/routing.yml"
+    prefix: /

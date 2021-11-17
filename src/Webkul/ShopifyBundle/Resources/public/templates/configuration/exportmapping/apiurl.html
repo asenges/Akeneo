@@ -1,0 +1,34 @@
+<div class="AknFieldContainer" data-code="type">
+    <div class="AknFieldContainer-header">
+        <label for="type" class="AknFieldContainer-label control-label required">
+            <%- label %> <em><%- required %></em>
+        </label>
+    </div>
+    <div class="AknFieldContainer-inputContainer field-input">
+        <select class="credentialSelect select2 select-field" required>
+            <% _.each(credentials, function(value, key) { %>
+                <option value="<%- key %>" 
+                    <%- key == credentialId ? 'selected' : '' %>>
+                    <%- value %>
+                </option>
+            <% }); %>
+        </select>
+    </div>
+    <!-- Validation Error block --> 
+    <%  if(!_.isEmpty(errors) ) { %>
+        <div class="AknFieldContainer-footer">
+            <div class="AknFieldContainer-validationErrors validation-errors">
+                <div class="AknFieldContainer-validationError">
+                    <% _.each(errors, function(value, key) { %>
+                        <% if (value.attribute == 'apiUrl') { %>
+                        <i class="icon-warning-sign"></i>
+                                <%- value.message %>
+                        <% } %> 
+                    <% }); %>
+                </div>
+            </div>
+        </div>
+    <% } %> 
+        <!-- Validation Error block -->
+</div>
+    

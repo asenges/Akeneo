@@ -1,0 +1,31 @@
+<div class="AknFieldContainer category" data-code="cscartCategoryId" <%  if(type != 'category') { %> style="display: none" <% } %>>
+    <div class="AknFieldContainer-header">
+        <label for="cscartCategoryId" class="AknFieldContainer-label control-label required">
+            <%- label %> <em><%- required %></em>
+        </label>
+    </div>
+
+    <!-- Select Field -->
+    <div class="AknFieldContainer-inputContainer field-input">
+        <select class="select2 select-field" name="cscartCategoryId" id="pim_enrich_entity_form_cscartCategoryId" required>
+            <% _.each(products, function(product) { %>
+                <option value="<%- product.id %>" <%- product.id === shopifyProductId ? 'selected' : '' %>><%- product.label %></option>
+            <% }); %>
+        </select>
+    </div>
+    <!-- //Select Field -->
+
+    <!-- Validation Error block -->
+    <%  if(error) { %>
+        <div class="AknFieldContainer-footer">
+            <div class="AknFieldContainer-validationErrors validation-errors">
+                <div class="AknFieldContainer-validationError">
+                    <i class="icon-warning-sign"></i>
+                    <%- error %>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <!-- //Validation Error block -->
+    
+</div>

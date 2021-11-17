@@ -1,0 +1,4 @@
+parameters:
+    tmp_storage_dir: null
+    pim.batch_job.service.class: '%pim_connector.job.simple_job.class%'
+    pim_enrich.provider.form.job_instance.class: Akeneo\Platform\Bundle\ImportExportBundle\Provider\Form\JobInstanceFormProvider

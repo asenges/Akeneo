@@ -1,0 +1,4 @@
+parameters:
+        pim.batch_job.service.class: Akeneo\Component\Batch\Job\Job
+        pim_connector.processor.normalization.product.class: Pim\Component\Connector\Processor\Normalization\ProductProcessor
+        pim_enrich.provider.form.job_instance.class: Pim\Bundle\EnrichBundle\Provider\Form\JobInstanceFormProvider

@@ -1,0 +1,14 @@
+<div class="AknFieldContainer" data-code="type" >
+    <div class="AknFieldContainer-header">
+        <label for="type" class="AknFieldContainer-label control-label required">
+            <%- label %> <em><%- required %></em>
+        </label>
+    </div>
+    <div class="AknFieldContainer-inputContainer field-input">
+        <select class="select2 select-field" name="type" id="pim_enrich_entity_form_type" required>
+            <% _.each(types, function(childType) { %>
+                <option value="<%- childType.code %>" <%- childType.code === type ? 'selected' : '' %>><%- childType.label %></option>
+            <% }); %>
+        </select>
+    </div>
+</div>

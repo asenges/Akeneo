@@ -1,0 +1,36 @@
+parameters:
+    webkul_shopify_connector.repository.export_mapping.class: Webkul\ShopifyBundle\Repository\DataMappingRepository
+    webkul_shopify_connector.entity.export_mapping.class: Webkul\ShopifyBundle\Entity\DataMapping
+    webkul_shopify_connector.entity.category.searchable: Webkul\ShopifyBundle\Repository\CategorySearchableRepository
+    webkul_shopify_connector.entity.product_and_product_model.searchable: Webkul\ShopifyBundle\Repository\ProductSearchableRepository
+
+services:
+    webkul_shopify.export_mapping.repository:
+        public: true
+        class: '%webkul_shopify_connector.repository.export_mapping.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%webkul_shopify_connector.entity.export_mapping.class%'
+
+    webkul_shopify.repository.category.search:
+        public: true
+        class: '%webkul_shopify_connector.entity.category.searchable%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%pim_catalog.entity.category.class%'
+
+    webkul_shopify.repository.product.search:
+        public: true
+        class: '%webkul_shopify_connector.entity.product_and_product_model.searchable%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%pim_catalog.entity.product.class%'
+
+    webkul_shopify.repository.product_model.search:
+        public: true
+        class: '%webkul_shopify_connector.entity.product_and_product_model.searchable%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%pim_catalog.entity.product_model.class%'
+
+

@@ -1,0 +1,3 @@
+shopify:
+    resource: "@ShopifyBundle/Resources/config/routing.yml"
+    prefix: /

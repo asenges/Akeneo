@@ -1,0 +1,99 @@
+<style>
+    .wk_margin_top_10 {
+        margin-top: 10px;
+    }
+    .wk_store_mapping td {
+        width: calc(30%);
+    }
+    .wk_store_mapping .wk_header_cell {
+        border: none;
+        display: table-cell;
+        color: #67768A;
+        font-size: 14px;
+        text-transform: uppercase;
+        padding: 10px 0px;        
+    }
+    .wk_store_mapping table {
+        table-layout: fixed;
+        text-align: left;
+    }    
+    .wk_store_mapping table thead {
+        border-bottom: 2px solid #67768A;        
+    }
+    .default{
+        text-align: center;
+        width: 15%;
+    }
+    .ShopifyStoreMapping-hint {
+        background: #F5F9FC;
+        display: flex;
+        padding: 5px;
+        font-size: 13px;
+        color: #67768A;
+        min-height: 80px;
+        align-items: center;
+    }
+    .ShopifyStoreMapping-icon {
+        min-height: 60px;
+        height: auto;
+        background-repeat: no-repeat;
+        position: relative;
+    }
+    .ShopifyStoreMapping-icon--info {
+        background-size: 24px auto;
+        border-right: 1px #D9DDE2 solid;
+        background-position: 50%;
+        min-width: 65px;
+        margin-right: 16px;
+        background-image: url(../bundles/shopify/images/icon-info.svg);
+    }
+    .SHopifyStoreMapping-hintTitle {
+        flex-grow: 1;
+    }
+    .ShopifyStoreMapping-remove {
+        margin: 15px;
+        background-size: 20px;
+    }
+    .AknIconButton--remove {
+        background: url(../bundles/pimui/images/icon-remove.svg) no-repeat center;
+        background-size: 20px;
+        opacity: 0.8;
+        transition: opacity 0.1s ease-in;
+        font-size: 0;
+    }
+    .ShopifyStoreMapping-hint--hidden {
+        display: none;
+    }
+</style>
+
+<div class="wk_margin_top_10 wk_store_mapping">
+    <div class="AknFormContainer AknFormContainer--withPadding AknFormContainer-Credential">
+        <!-- Input Field -->
+        <% _.each(controls, function (control) { %>
+            <div class="AknFieldContainer">
+                <div class="AknFieldContainer-header">
+                    <label class="AknFieldContainer-label">
+                        <%- _.__(control.label) %> <em><%- _.__('pim_enrich.form.required') %></em>
+                    </label>
+                </div>
+                
+                <div class="AknFieldContainer-inputContainer field-input">
+                    <% if(control.type === 'text') { %>
+                        <input type="<%- control.type %>" name="<%- control.name %>" id="pim_enrich_entity_form_<%- control.name %>" class="AknTextField label-field" value="<%- model[control.name] %>"  required>
+                    <% } else if(control.type === 'password') { %>
+                        <input type="<%- control.type %>" name="<%- control.name %>" id="pim_enrich_entity_form_<%- control.name %>" class="AknTextField label-field" value=<% if(model[control.name]){ %>"************"<% } else { %> "" <%} %>  required>
+                    <% } %>
+                </div>
+            </div>
+
+            <% if(control.type === 'select') { %>
+                <select class="select2 select-field" class="<%- control.class %>" name="<%- control.name %>" id="pim_enrich_entity_form_<%- control.name %>" required>
+                    <% _.each(control.options, function(label, code) { %>
+                        <option value="<%- code %>" <% if(code === model[control.name]){ %> selected <% } %> > <%- label %></option>
+                    <% }); %>
+                </select>
+            <% } %>
+        <% }); %>
+            
+    </div>
+</div>

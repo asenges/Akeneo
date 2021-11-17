@@ -1,0 +1,92 @@
+datagrid:
+    webkul-product-export-mapping-grid:
+        extended_entity_name: Webkul\ShopifyBundle\Entity\DataMapping
+        options:
+            entityHint: DataMapping
+            manageFilters: false
+        source:
+            acl_resource: webkul_shopify_connector_configuration
+            type: custom_datasource_credentials
+            entity: 'Webkul\ShopifyBundle\Entity\DataMapping'
+            query:
+                select:
+                    - aem.id
+                    - aem.entityType
+                    - aem.code
+                    - aem.externalId
+                    - aem.relatedId
+                    - aem.apiUrl
+                from:
+                    - { table: 'Webkul\ShopifyBundle\Entity\DataMapping', alias: aem }
+        columns:
+            id:
+                label: webkul_shopify.product.grid.export_mappings.columns.id
+                frontend_type: label
+            entityType:
+                label: webkul_shopify.product.grid.export_mappings.columns.entityType
+            code:
+                label: webkul_shopify.product.grid.export_mappings.columns.code
+            externalId:
+                label:  webkul_shopify.product.grid.export_mappings.columns.externalId
+            relatedId:
+                label:  webkul_shopify.product.grid.export_mappings.columns.relatedId
+            apiUrl:
+                label: webkul_shopify.product.grid.export_mappings.columns.apiUrl
+        properties:
+            delete_link:
+                type: url
+                route: webkul_shopify_connector_configuration_export_mapping_delete
+                params:
+                    - id
+        mass_actions:
+            delete_wk_shopify_mappings:
+                type: mass_delete
+                label: pim.grid.mass_action.delete
+                entity_name: DataMapping
+                acl_resource: webkul_shopify_connector_configuration
+                handler: webkul_shopify_connector_export_mapping_mass_delete
+                className: 'AknButton AknButton--important AknButtonList-item'
+                messages:
+                    confirm_title: pim_datagrid.mass_action.delete.confirm_title
+                    confirm_content: webkul_shopify_connector.mass_action.delete.confirm_content
+                    confirm_ok: pim_datagrid.mass_action.delete.label
+                    success: webkul_shopify_connector.mass_action.delete.success
+                    error: webkul_shopify_connector.mass_action.delete.error
+                    empty_selection: webkul_shopify_connector.mass_action.delete.empty_selection
+
+        sorters:
+            columns:
+                id:
+                    data_name: aem.id
+                entityType:
+                    data_name: aem.entityType
+                code:
+                    data_name: aem.code
+                externalId:
+                    data_name: aem.externalId
+                relatedId:
+                    data_name: aem.relatedId
+                apiUrl:
+                    data_name: aem.apiUrl
+                # default:
+                #     id: '%oro_datagrid.extension.orm_sorter.class%::DIRECTION_ASC'
+        filters:
+            columns:
+                code:
+                    type: search
+                    data_name: aem.code
+                entityType:
+                    type:      choice
+                    data_name: aem.entityType
+                    options:
+                        field_options:
+                            multiple: true
+                            choices: '@webkul_shopify_connector.controller.rest.export_mapping->getTypes'
+        actions:
+            delete:
+                launcherOptions:
+                    className:  AknIconButton AknIconButton--small AknIconButton--trash
+                type:           delete
+                label:          Delete
+                link:           delete_link
+                acl_resource:   webkul_shopify_connector_configuration

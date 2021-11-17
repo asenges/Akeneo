@@ -1,0 +1,158 @@
+
+batch_jobs:
+    shopify_export:
+        label: Shopify Export Job
+
+shopify:
+    connector: Shopify Connector
+    form:
+        properties:
+            shop_url:
+                title: Shop Url
+            api_key:
+                title: Api key
+            password:
+                title: Api Password
+
+    documentation: Documentation
+    credentials:
+        tab: Credentials
+    exportsettings:
+        tab:  Export Attribute Mappings
+    importsettings:
+        tab: Import Attribute Mappings
+    othersettings:
+        tab: Other Settings
+    connector.title: Shopify Akeneo Connector
+    defaults.inventory_location: Inventory Location
+    defaults.inventory_cost: Cost per item
+    useas.name: Name
+    useas.description: Description
+    useas.vendor: Vendor
+    useas.product_type: Product type
+    useas.seo_title: Meta Title (SEO)
+    useas.seo_description: Meta Description (SEO)
+    useas.price: Price
+    useas.compare_at_price: Compare Price
+    useas.weight: Weight
+    useas.quantity: Stock quantity
+    useas.variant_name: Variant Name
+    useas.barcode: Barcode
+    useas.tags.comma.separated: Tags(comma separated)
+    useas.inventory_management: Inventory policy
+    useas.allow_purchase_out_of_stock: Allow customers to purchase this product when it's out of stock
+
+    field_label: Field in Shopify
+    field_in_akeneo: Use value of this Attribute
+    field_value: Use this fixed value
+    export:
+        view:
+            jobs: View Export jobs
+page_title:
+    webkul_shopify_connector_configuration: Shopify Connector
+
+batch_jobs.shopify_export.category_export.label: Category/Collection Export
+batch_jobs.shopify_export.product_export.label: Product and Product Variants Export
+shopify.useas.taxable: Taxable (1/0)
+shopify.useas.requires_shipping: Requires shipping
+shopify.useas.fulfillment_service: Fulfillment Service (manual, gift_card or other)
+shopify.useas.handle: URL and handle
+shopify.override_credentials.text: Provide credentials below only if want to use different credentials from common credentials. Otherwise don't fill fields below.
+pim.grid.mass_action.quick_export.shopify: Shopify Export (All Attributes)
+batch_jobs.shopify_quick_export.product_export.label: Product and Variants Quick Export
+batch_jobs.shopify_category_export.label: Shopify Category only Export
+batch_jobs.shopify_category_export.category_export.label: Category Export
+batch_jobs.shopify_product_export.label: Shopify Product only export
+batch_jobs.shopify_product_export.product_export.label: Shopify Product export
+
+shopify.import.view.jobs: View Import jobs
+pim_enrich.form.job_instance.button.import.title: IMPORT NOW
+batch_jobs.category_import.label: Category Import
+batch_jobs.attribute_and_attribute_option_import.label: Attribute And Attribute Option Import
+batch_jobs.product_import.label: Product Import
+batch_jobs.product_model_import.label: Product Model Import
+batch_jobs.attribute_import.label: Attribute Import
+batch_jobs.attribute_option_import.label: Attribute Options Import
+batch_jobs.family_variant_import.label: Family Variant Import
+batch_jobs.import_product_model_descendants.label: Product Model Descendants
+batch_jobs.shopify_import.label: Shopify All Import
+batch_jobs.shopify_quick_export.category_export.label: Category Export (of selected products)
+pim_enrich.form.job_instance.tab.properties.inventory_location.title: Inventory Location
+pim_enrich.form.job_instance.tab.properties.searchsku.title: Search for Product before export (Prevent Duplicacy)
+job_execution.summary.Product already Exist: Product Already Exist
+webkul_shopify_connector.export_mapping.index.create_btn: create mapping
+webkul_shopify_connector.entity.export_mapping.selected: Selected Entity
+page_title.webkul_shopify_data_grid: Akeneo Shopify Mapping
+webkul_shopify_connector.export_mapping.index.title: Akeneo Shopify Connector Mapping
+mapping_message: If your Shopify setup already have products and categories then please map them with akeneo in order to prevent duplicate record creation.
+mapping: Map Product/Category
+webkul_shopify_connector.item.export_mapping: Akeneo Shopify Mapping
+webkul_shopify_connector.title: Create
+webkul_shopify_connector.form.configuration.export_mapping.properties.type: Mapping Type
+webkul_shopify_connector.form.configuration.export_mapping.properties.type.category: Category
+webkul_shopify_connector.form.configuration.export_mapping.properties.type.product: Product
+webkul_shopify_connector.form.configuration.export_mapping.properties.akeneo_category: Akeneo Category
+webkul_shopify_connector.form.configuration.export_mapping.properties.shopify_category: Shopify Category
+webkul_shopify_connector.form.configuration.export_mapping.properties.akeneo_apiUrl: API URL
+webkul_shopify_connector.form.configuration.export_mapping.properties.shopify_product: Shopify Product
+webkul_shopify_connector.form.configuration.export_mapping.properties.akeneo_product: Akeneo Product
+confirmation.remove.datamapping: Are you Sure to Delete?
+flash.datamapping.removed: Data Mapping Deleted Successfully
+webkul_shopify_connector.mass_action.delete.confirm_content: Are you Sure to Delete Mappings?
+pim_datagrid.mass_action.delete.label: delete mappings
+webkul_shopify_connector.mass_action.delete.success: Mappings Deleted Successfully
+webkul_shopify.product.grid.export_mappings.columns.code: Akeneo Entity Code
+#data mapping
+batch_jobs.shopify_import_data_mapping.delete_mapping.label : Delete Products Mapping
+batch_jobs.shopify_import_data_mapping.product_import.label: Import Products Mapping
+batch_jobs.shopify_import_data_mapping.label: Delete / Reimport Product Data Mapping
+
+pim_enrich.entity.credentials.info.update_successful: Credential Update Successful
+pim_enrich.entity.credentials.info.update_failed: Credential Update Failed
+pim_enrich.entity.credentials.info.field_not_ready: Credential Field Not Ready
+pim.grid.mass_action.delete: Delete
+pim_datagrid.mass_action.delete.confirm_title: Confirm
+pim_enrich.form.required: (required)
+pim_enrich.export.product.filter.currency.title: Currency
+
+pim_enrich.form.job_instance.button.edit.title: Edit
+pim_enrich.form.job_instance.button.export.title: Export Now
+pim_enrich.form.job_instance.subsection.last_executions: Last Executions
+pim_enrich.form.job_instance.tab.properties.title: Properties
+pim_enrich.form.job_instance.tab.properties.code.title: Code
+pim_enrich.form.job_instance.tab.properties.label.title: Label
+pim_enrich.form.job_instance.tab.content.title: Content
+pim_enrich.export.product.filter.locales.title: Locales
+pim_enrich.form.job_instance.tab.history.title: History
+pim_title.webkul_shopify_connector_configuration: Webkul Shopify Connector Configuration
+
+pim_enrich.entity.save.label: Save
+pim_enrich.entity.add_product.uppercase_label: Akeneo Products
+pim_enrich.entity.add_category.uppercase_label: Akeneo Categories
+pim_enrich.entity.add_shopify_category.uppercase_label: Shopify Categories
+pim_enrich.entity.add_shopify_product.uppercase_label: Shopify Products
+pim_enrich.confirmation.delete_item: Confirm deletion
+pim_title.webkul_shopify_data_grid: Shopify Connector Export Mapping Index
+shopify.form.properties.api.version: Shopify API Version
+pim_enrich.entity.datamapping.module.delete.confirm: Do you realy want to delete this mapping ?
+pim_enrich.entity.datamapping.flash.delete.success: Mapping Successfully removed.
+webkul_shopify_connector.credential.create_btn: Create Credentials
+webkul_shopify_connector.create_popin.title: Shopify Connector
+webkul_shopify_connector.item.credential: Create
+pim_enrich.entity.credentialsconfig.module.delete.confirm: Delete
+pim_enrich.entity.credentialsconfig.flash.delete.success: Deleted
+shopify.form.properties.shop_url.title: Shopify URL
+pim_enrich.entity.group_type.message.created: Entity Created
+webkul_shopify.edit.credential: Shopify Credentials
+pim_title.webkul_shopify_credentials_edit: Title - Shopify Credentials Edit
+shopify.form.properties.importProfile.title: Shopify Credentials
+shopify.form.properties.exportProfile.title: Shopify Credentials
+pim_enrich.entity.credential.message.created: Credentials Created Succsessfully
+
+batch_jobs.default_steps.category_import: Category import
+batch_jobs.default_steps.attribute_import: Atttribute import
+batch_jobs.default_steps.attribute_option_import: Attribute option import
+batch_jobs.default_steps.family_variant_import: Family variant
+batch_jobs.default_steps.product_model_import: Product model import
+batch_jobs.default_steps.product_import: Product import
+pim_datagrid.mass_action.quick_export.configurator.shopify: Shopify Export

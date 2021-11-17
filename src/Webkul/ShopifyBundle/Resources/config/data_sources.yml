@@ -1,0 +1,8 @@
+services:
+    webkul-product-export-mapping-grid.datasource.credentails:
+        class: Webkul\ShopifyBundle\DataSource\CredentailsDatasource
+        arguments:
+            - '@webkul_shopify.export_mapping.repository'
+            - '@pim_datagrid.datasource.result_record.hydrator.default'
+        tags:
+            - { name: oro_datagrid.datasource, type: custom_datasource_credentials }

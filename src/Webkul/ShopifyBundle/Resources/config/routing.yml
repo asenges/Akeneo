@@ -1,0 +1,137 @@
+webkul_shopify_connector_configuration:
+    path: /shopify-configuration/
+
+webkul_shopify_connector_configuration_get:
+    path: /shopify-configuration/rest
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:credentialAction }
+    methods: [GET]
+
+webkul_shopify_connector_configuration_post:
+    path: /shopify-configuration/rest/{tab}
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:credentialAction }
+    methods: [POST]
+
+webkul_shopify_connector_configuration_action:
+    path: /shopify-configuration/rest/action
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:getDataAction }
+    methods: [GET]
+
+webkul_shopify_connector_configuration_active_currencies:
+    path: /shopify-configuration/rest/activecurrencies
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:getActiveCurrenciesAction }
+    methods: [GET]
+
+webkul_shopify_connector_configuration_get_logger_path:
+    path: /shopify-configuration/rest/logger_path
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:getLogFileAction }
+    methods: [GET]
+
+webkul_shopify_media_download:
+    path: /media/shopify/download/{filename}
+    defaults: { _controller: webkul.shopify_connector.controller.imagefile:downloadAction, filter: null }
+    methods: [GET]
+
+webkul_shopify_connector_configuration_get_inventory_location:
+    path: /shopify-configuration/rest/inventory_locations/{id}
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:getRemoteLocationsAction }
+    methods: [GET]
+
+# Datamapping View
+webkul_shopify_data_grid:
+    path: /shopify-configuration/rest/data-mapping/
+
+#save DataMapping
+webkul_shopify_data_grid_create:
+    path: /shopify-configuration/rest/export-mapping/create/
+    defaults: { _controller: webkul_shopify_connector.controller.rest.export_mapping:createAction}
+    methods: [POST]
+
+# Delete Datamapping
+webkul_shopify_connector_configuration_export_mapping_delete:
+    path: /shopify-configuration/rest/data-mapping/{id}
+    defaults: { _controller: webkul_shopify_connector.controller.rest.export_mapping:deleteAction }
+    requirements:
+        id: \d+
+    methods: [DELETE]
+
+webkul_shopify_connector_configuration_get_akeneo_product:
+    path: /shopify-configuration/rest/data-mapping/akeneo-products
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:getProductsCodeAction}
+
+webkul_shopify_connector_configuration_get_shopify_product:
+    path: /shopify-configuration/rest/data-mapping/shopify-products/{id}
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:getShopifyProductsAction }
+
+webkul_shopify_connector_get_akeneo_category:
+    path: /shopify-configuration/rest/data-mapping/akeneo-category
+    defaults: { _controller:  webkul_shopify_connector.controller.rest.export_mapping:getAkeneoCategoriesAction }
+
+webkul_shopify_data_grid_post:
+    path: /shopify-configuration/rest/data-mapping/save-shopify-products
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:saveShopifyProductsAction }
+
+webkul_shopify_connector_get_shopify_category:
+    path: /shopify-configuration/rest/data-mapping/get-shopify-categories/{id}
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:getShopifyCategoriesAction }
+
+webkul_shopify_connector_get_api_url:
+    path: /shopify-configuration/rest/data-mapping/get-shopify-apiUrl
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:getShopifyApiUrlAction }
+#History Tab Route
+webkul_shopify_get_history_class:
+    path: /shopify-configuration/rest/history-class/
+    defaults: { _controller: webkul_shopify_connector.configuration.controller:getHistoryClassAction }
+    methods: [GET]
+
+# mass action routes
+  
+webkul_shopify_mass_delete_export_mapping:
+    path: /shopify-configuration/delete-exportmapping
+    defaults: { _controller: webkul_shopify.controller.rest.mass_delete:massDeleteAction }
+    methods: [GET, POST]
+
+webkul_shopify_export_mapping_datagrid_mass_action:
+    path: /shopify-configuration/mass-action
+    defaults: { _controller: webkul_shopify.export_mapping.controller.mass_action:massActionAction }
+
+webkul_shopify_credentials_create:
+    path: /shopify-configuration/credential
+    defaults: { _controller: ShopifyBundle:Rest\Credential:add }
+    methods: [POST]
+
+webkul_shopify_credentials_update:
+    path: /shopify-configuration/credential/update
+    defaults: { _controller: ShopifyBundle:Rest\Credential:add }
+
+webkul_shopify_credentials_edit:
+    path: /shopify-configuration/rest/edit/{id}
+    requirements:
+        id: \d+
+
+webkul_shopify_credentials_change_status:
+    path: /shopify-configuration/rest/toggle/{id}
+    defaults: { _controller: ShopifyBundle:Rest\Credential:toggleStatus }
+    requirements:
+        id: \d+
+
+webkul_shopify_credentials_delete:
+    path: /shopify-configuration/rest/credentials/{id}
+    defaults: { _controller: ShopifyBundle:Rest\Credential:deleteCredentail }
+    requirements:
+        id: \d+
+    methods: [DELETE]
+
+webkul_shopify_credentials_change_default_quickexport:
+    path: /shopify-configuration/credential/default
+    defaults: { _controller: ShopifyBundle:Rest\Credential:changeDefault }
+    methods: [GET,POST,PUT]
+
+webkul_shopify_credentials_get:
+    path: /shopify-configuration/rest/{id}
+    defaults: { _controller: ShopifyBundle:Rest\Credential:get }    
+    methods: [GET]
+
+webkul_shopify_credentials_get_all:
+    path: /shopify-configuration/credential/rest
+    defaults: { _controller: ShopifyBundle:Rest\Credential:getAll }    
+    methods: [GET]

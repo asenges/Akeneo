@@ -1,0 +1,9 @@
+parameters:
+    pim_datagrid.extension.mass_action.handler.webkul_shopify_export_mapping_delete.class:  Webkul\ShopifyBundle\Extension\MassAction\Handler\DeleteShopifyExportMappingsMassActionHandler
+services:
+    pim_datagrid.extension.mass_action.handler.webkul_shopify_export_mapping_delete:
+        class: '%pim_datagrid.extension.mass_action.handler.webkul_shopify_export_mapping_delete.class%'
+        parent: pim_datagrid.extension.mass_action.handler.delete
+        tags:
+            - { name: pim_datagrid.extension.mass_action.handler, alias: webkul_shopify_connector_export_mapping_mass_delete }
+

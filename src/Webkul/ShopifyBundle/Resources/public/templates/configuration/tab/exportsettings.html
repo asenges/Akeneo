@@ -1,0 +1,351 @@
+<!-- Styles for grid view -->
+<style>
+    .AknFormContainer-Mappings .field-input,.AknFormContainer-Mappings .field-header,.AknFormContainer-Mappings .header-col {
+        display: inline-block;
+        width: calc(33% - 2px);
+        border: none;
+    }
+    .field-checkbox {
+        display: inline-block;
+        width: calc(8% - 2px);
+        word-wrap: break-word;
+        border: none;
+        /* vertical-align: middle; */
+        text-align: center;
+        line-height: 18px;
+    }
+    .AknFormContainer-Mappings .AknForm-header.widget-header {
+        margin-bottom: 10px;
+    }
+    .AknSettingField {
+        width: 80%;
+    }
+    .ak-margin-top {
+        margin-top: 10px;
+    }
+    .checkbox-disabled:before{
+        background-color: #FFFF;
+        cursor: none;
+        border: none;
+    }
+    .custom_height_class {
+        max-height: 100px !important;
+        overflow: auto;
+    }
+    .attributes-mapping .concatenate-fields li.select2-search-choice:not(:nth-last-of-type(2)):after {
+        background-repeat: no-repeat;
+        background-position: center;
+        content: url(../bundles/pimui/images/icon-plus.svg);
+        top: 5px;
+        position: absolute;
+        right: -29px;
+        zoom: 0.7;
+    }
+    .attributes-mapping .concatenate-fields li.select2-search-choice {
+        margin-right: 18px !important;
+    }
+    .select2-container-multi .select2-choices {
+        overflow: auto;
+        max-height: 200px;
+    }
+    .AknCatalogVolume-hint {
+        background: #F5F9FC;
+        display: flex;
+        padding: 5px;
+        font-size: 14px;
+        color: #67768A;
+        min-height: 80px;
+        align-items: center;
+    }
+    .AknCatalogVolume-icon {
+        min-width: 70px;
+        min-height: 60px;
+        height: auto;
+        background-repeat: no-repeat;
+        background-position: 50% 15px;
+        background-size: 29px auto;
+        /* position: relative; */
+    }
+    .AknCatalogVolume-icon--info {
+        background-size: 24px auto;
+        border-right: 1px #D9DDE2 solid;
+        background-position: 50%;
+        min-width: 65px;
+        margin-right: 16px;
+        background-image: url('../bundles/shopify/images/my-icon.svg') !important;
+    }
+    .AknCatalogVolume-hintTitle {
+        flex-grow: 2;
+    }
+    .AknButton--mapping {
+        margin-right:1%;
+    }
+
+
+
+</style>
+
+<!-- //HTML for form grid view -->
+<div class="AknFormContainer AknFormContainer--withPadding  AknFormContainer-Mappings shopify-settings" style="width: 100%">
+    <div class="AknCatalogVolume-hint ">
+        <div class="AknCatalogVolume-icon AknCatalogVolume-icon--info"></div>
+        <div class="AknCatalogVolume-hintTitle"> <%- _.__('mapping_message') %> </div>
+        <a class="AknButton AknButton--mapping">Map Product/Category </a>
+    </div>
+    <div class="tabsection-title">
+        <span>
+            <%- _.__('Attribute mapping') %>
+        </span>
+        <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="<%- _.__('Map fields below for Product export. While exporting product which attribute would be used as title, body_html etc.You can also specify value which would be used in all products while exporting.') %>"></i>
+    </div>
+
+    <div class="AknForm-header widget-header">
+        <div class="header-col AknSubsection-title">
+            <%- _.__('shopify.field_label') %>
+        </div>
+
+        <div class="header-col AknSubsection-title">
+            <%- _.__('shopify.field_in_akeneo') %>
+        </div>
+        <div class="header-col AknSubsection-title">
+            <%- _.__('shopify.field_value') %>
+        </div>
+    </div>
+    <!-- Input Field -->
+    <div>
+
+        <% _.each(fields, function (field,  key) {
+            if(field.mapping && field.mapping.indexOf('export') != -1) { %>
+            <div class="AknFieldContainer shopify-mapping-row attributes-mapping" >
+                <!-- field label -->
+                <div class="field-header">
+                    <label class="AknFieldContainer-label">
+                        <%- _.__(field.label) %> <em>[<%- field.name %>]</em>
+                    </label>
+                </div>
+
+                <!-- akeneo attributes -->
+                <div class="field-input <% if(field.name != 'tags')  { %> <%- 'concatenate-fields' %> <% }%>">
+                    <select name="<%- field.name %>" id="pim_enrich_entity_form_<%- field.name %>" class="select2 label-field AknSettingField"  data-wrapper="settings"
+                        <% if(model && typeof(model['defaults']) !== 'undefined' && typeof(model['defaults'][field.name]) !== 'undefined' && model['defaults'][field.name]){ %>readonly="readonly"<% } %>
+                        <% if(field && typeof(field.multiselect) !== 'undefined' && field.multiselect) { %>multiple="multiple" <% } %>
+                    >
+                        <% if(!field || typeof(field.multiselect) === 'undefined' || !field.multiselect) { %>
+                            <option><%- _.__('Select Akeneo Attribute') %></option>
+                        <% } %>
+
+                        <% selectVal = model && typeof(model['settings']) !== 'undefined' && typeof(model['settings'][field.name]) !== 'undefined' ?  model['settings'][field.name] : '' %>
+
+                        <%
+                        updatedAttributes = _.extend(attributes);
+                        
+                        if( typeof(field.multiselect) != 'undefined' && field.multiselect && typeof selectVal === "object") {
+                            _.each(selectVal, function(field) {
+                                attribute = _.find(updatedAttributes, function(a) {
+                                                return a.code === field;
+                                            });
+                                updatedAttributes = _.without(updatedAttributes, _.findWhere(updatedAttributes, { code: field }));
+                                if(attribute) { %>                                    
+                                    <option value="<%- attribute.code %>" <% if(attribute.code === selectVal || (selectVal instanceof Array && selectVal.indexOf(attribute.code) !== -1 ) ) { %>selected="selected"<% } %> >
+                                        <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                    </option>
+                                <%  }
+                            });
+                        }
+                        %>
+                        <% _.each(updatedAttributes, function(attribute) { %>
+                            <% if(attribute.code == 'Family' && field.name != 'tags')  {  } else if( attribute.code ==  'GroupCode' && field.name != 'tags')  {  }
+                             else if(field.types.indexOf(attribute.type) !== -1 || $.inArray(attribute.code, ['Family', 'GroupCode']) !== -1 ) {   %>
+                                <option value="<%- attribute.code %>" <% if(attribute.code === selectVal || (selectVal instanceof Array && selectVal.indexOf(attribute.code) !== -1 ) ) { %>selected="selected"<% } %> >
+                                    <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                </option>
+                            <% } %>
+                        <% }); %>
+                    </select>
+
+                    <!-- use multiple attribute check box -->
+                    <div class="field-checkbox">
+                       <% if(field && typeof(field.multiselect) !== 'undefined' && field.name !=="tags") { %>
+                           <input type="checkbox" class="field-checkbox-input" name="<%- field.name %>" <% if(field && typeof(field.multiselect) !== 'undefined' && field.multiselect) { %>checked="checked" <% }  %>
+                           data-toggle="tooltip" data-placement="right" data-original-title="<%- _.__('Concatenate multiple attribute values into a single value') %>." >
+                       <% } else { %>
+                           <input type="checkbox" style="visibility: hidden">
+                        <% } %>
+                    </div>
+
+                    <% if('undefined' !== typeof(field.tooltip) ) { %>
+                        <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="<%- _.__(field.tooltip) %>."></i>
+                    <% } %>
+                </div>
+
+                <!-- fixed value -->
+                <div class="field-input">
+                    <input type="text" name="<%- field.name %>" id="pim_enrich_entity_form_<%- field.name %>_value" class="AknTextField label-field AknSettingField" data-wrapper="defaults" value="<%- model && typeof(model['defaults']) !== 'undefined' && typeof(model['defaults'][field.name]) !== 'undefined' ?  model['defaults'][field.name] : '' %>"  placeholder="<%- _.__('Use this value for all products') %>" <% if( (model && typeof(model['settings']) !== 'undefined' && typeof(model['settings'][field.name]) !== 'undefined' && model['settings'][field.name] ) || !field.default ){ %>readonly="readonly"<% } %> >
+                </div>
+            </div>
+        <% } }); %>
+    </div>
+
+    <div>
+        <div class="tabsection-title">
+            <span>
+                <%- _.__('Shopify Other mappings') %>
+            </span>
+            <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="<%- _.__('Use following attributes as IMAGE and ASSOCIATION mapping.') %>"></i>
+        </div>
+        <div class="AknFieldContainer shopify-mapping-row ak-margin-top" >
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Attributes to be used as Images') %>
+                    <br>
+                    <em>( <%- _.__('Only these images will be used in export') %> ) </em>
+                </label>
+            </div>
+
+            <div class="field-input">
+                <select name="images" id="pim_enrich_entity_form_images" class="select2 label-field AknSettingField" data-wrapper="others" multiple="multiple">
+                    <% selectVal = model && typeof(model['others']) !== 'undefined' && typeof(model['others']['images']) !== 'undefined' ?  model['others']['images'] : '' %>
+                    <% _.each(imageAttrs, function(attribute) { %>
+                        <option value="<%- attribute.code %>" <% if(attribute.code === selectVal || (selectVal instanceof Array && selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> >
+                            <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                        </option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+        <div class="AknFieldContainer shopify-mapping-row ak-margin-top" >
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Associations to be used as Meta fields (handle of assosiated products would be exported as meta fields. works only when handle is mapped above)') %>
+                    <br>
+                    <em>(<%- _.__('namespace: global') %>) </em>
+                </label>
+            </div>
+
+            <div class="field-input">
+                <select name="meta_fields_associations" id="pim_enrich_entity_form_meta_fields" class="select2 label-field AknSettingField" data-wrapper="others" multiple="multiple" <% if(typeof(model['settings']) == 'undefined' || typeof(model['settings']['handle']) == 'undefined' || model['settings']['handle'] == '' || model['settings']['handle'] == null) { %> disabled <% } %>>
+                    <% selectVal = model && typeof(model['others']) !== 'undefined' && typeof(model['others']['meta_fields_associations']) !== 'undefined' ?  model['others']['meta_fields_associations'] : '' %>
+                    <% _.each(associations, function(association) { %>
+                            <option value="<%- association.code %>" <% if(association.code === selectVal || (selectVal instanceof Array && selectVal.indexOf(association.code) !== -1) ) { %>selected="selected"<% } %> >
+                                <%- 'undefined' !== typeof(association.labels[currentLocale]) ? association.labels[currentLocale] : association.code  %>
+                            </option>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+        <!-- my code start -->
+        <div class="tabsection-title">
+            <span>
+                <%- _.__('Attribute to be used as metafield') %>
+            </span>
+            <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="<%- _.__('Use following attributes as meta fields in shopify. You can use these in product page template.') %>"></i>
+        </div>
+        <div class="AknFieldContainer shopify-mapping-row ak-margin-top" >
+            <div class="field-header">
+                <!-- <label class="AknFieldContainer-label">
+                    <%- _.__('Attributes to be used as String Meta fields') %>
+                    <br>
+                </label> -->
+            </div>
+
+            <div class="field-input">
+                <select name="meta_fields_string" id="pim_enrich_entity_form_meta_fields" class="select2 label-field AknSettingField meta_fields_shopify custom_height_class" data-wrapper="others" multiple="multiple">
+                    <% selectVal = model && typeof(model['others']) !== 'undefined' && typeof(model['others']['meta_fields_string']) !== 'undefined' ?  model['others']['meta_fields_string'] : '' %>
+                    <% _.each(attributes, function(attribute) { %>
+                        <% if(['pim_reference_data_multiselect', 'pim_reference_data_simpleselect', 'pim_catalog_image'].indexOf(attribute.type) === -1) { %>
+                            <option value="<%- attribute.code %>" <% if(attribute.code === selectVal || (selectVal instanceof Array && selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> >
+                                <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                            </option>
+                        <% } %>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="field-input">
+                <select class="select2 label-field AknSettingField meta_fields_shopify" data-wrapper="others" disabled>
+                    <option value="Integer" selected="selected">
+                        String
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="AknFieldContainer shopify-mapping-row ak-margin-top" >
+            <div class="field-header">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Attributes to be used as Meta fields') %>
+                    <br>
+                </label>
+            </div>
+
+            <div class="field-input">
+                <select name="meta_fields_integer" id="pim_enrich_entity_form_meta_fields" class="select2 label-field AknSettingField meta_fields_shopify custom_height_class" data-wrapper="others" multiple="multiple">
+                    <% selectVal = model && typeof(model['others']) !== 'undefined' && typeof(model['others']['meta_fields_integer']) !== 'undefined' ?  model['others']['meta_fields_integer'] : '' %>
+                    <% _.each(attributes, function(attribute) { %>
+                        <% if(!(['pim_catalog_number'].indexOf(attribute.type) === -1)) { %>
+                            <option value="<%- attribute.code %>" <% if(attribute.code === selectVal || (selectVal instanceof Array && selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> >
+                                <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                            </option>
+                        <% } %>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="field-input">
+                <select class="select2 label-field AknSettingField meta_fields_shopify" data-wrapper="others" disabled>
+                    <option value="Integer" selected="selected">
+                        Integer
+                    </option>
+                </select>
+            </div>
+        </div>
+        <div class="AknFieldContainer shopify-mapping-row ak-margin-top" >
+            <div class="field-header">
+                <!-- <label class="AknFieldContainer-label">
+                    <%- _.__('Attributes to be used as Json_string Meta fields') %>
+                    <br>
+                </label> -->
+            </div>
+
+            <div class="field-input">
+                <select name="meta_fields_json" id="pim_enrich_entity_form_meta_fields" class="select2 label-field AknSettingField meta_fields_shopify custom_height_class" data-wrapper="others" multiple="multiple">
+                    <% selectVal = model && typeof(model['others']) !== 'undefined' && typeof(model['others']['meta_fields_json']) !== 'undefined' ?  model['others']['meta_fields_json'] : '' %>
+                    <% _.each(attributes, function(attribute) { %>
+                        <% if(!(['pim_catalog_textarea', 'pim_catalog_text'].indexOf(attribute.type) === -1)) { %>
+                            <option value="<%- attribute.code %>" <% if(attribute.code === selectVal || (selectVal instanceof Array && selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> >
+                                <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                            </option>
+                        <% } %>
+                    <% }); %>
+                </select>
+            </div>
+            <div class="field-input">
+                <select class="select2 label-field AknSettingField meta_fields_shopify" data-wrapper="others" disabled>
+                    <option value="Integer" selected="selected">
+                        Json_string
+                    </option>
+                </select>
+            </div>
+        </div>
+        <!-- my code end -->
+    </div>
+
+    <div class="ak-hr ak-mar-bottom-10"></div>
+    <div class="tabsection-title">
+            <%- _.__('Quick Export Currency Mapping') %>
+    </div>
+    <div class="AknFieldContainer ak-margin-top" >
+            <div class="field-header" >
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Currency') %>
+                </label>
+            </div>
+            <div class="field-input">
+                <select name="qcurrency" id="pim_enrich_entity_form_currency" class="select2 label-field AknSettingField quicksettings">
+                        <option><%- _.__('Select Currency') %></option>
+                        <% _.each(currencies, function (currency, key){ %>
+                            <option value="<%- key %>" <% if(model.quicksettings.qcurrency == key){ %> selected = "selected" <%};%> >
+                             <%- _.__(currency) %>
+                            </option>
+                        <% }); %>
+                </select>
+            </div>
+    </div>
+</div>

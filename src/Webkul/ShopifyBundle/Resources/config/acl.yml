@@ -1,0 +1,4 @@
+webkul_shopify_connector_configuration:
+    type: action
+    label: Shopify Akeneo Connector
+    group_name: webkul_shopify_connector_acl_group

@@ -1,0 +1,101 @@
+extensions:
+    webkul-shopify-connector-export-mapping-index:
+      module: pim/common/simple-view
+      config:
+        template: pim/template/common/default-template
+      forwarded-events:
+        grid_load:start: grid_load:start
+        grid_load:complete: grid_load:complete
+
+
+    webkul-shopify-connector-export-mapping-index-grid-container:
+        module: pim/common/simple-view
+        parent: webkul-shopify-connector-export-mapping-index
+        targetZone: content
+        config:
+            template: pim/template/form/index/index
+
+    webkul-shopify-connector-export-mapping-index-user-navigation:
+        module: pim/menu/user-navigation
+        parent: webkul-shopify-connector-export-mapping-index
+        targetZone: user-menu
+        config:
+            userAccount: pim_menu.user.user_account
+            logout: pim_menu.user.logout
+
+    webkul-shopify-connector-export-mapping-index-create-button:
+        module: pim/form/common/index/create-button
+        parent: webkul-shopify-connector-export-mapping-index
+        targetZone: buttons
+        position: 100
+        config:
+            iconName: plus
+            title: webkul_shopify_connector.export_mapping.index.create_btn
+            modalForm: webkul-shopify-connector-export-mapping-create-modal
+
+    webkul-shopify-connector-export-mapping-index-grid-title:
+        module: pim/common/grid-title
+        parent: webkul-shopify-connector-export-mapping-index
+        targetZone: title
+        config:
+            title: webkul_shopify_connector.export_mapping.index.title
+
+    webkul-shopify-connector-export-mapping-index-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: webkul-shopify-connector-export-mapping-index
+        targetZone: breadcrumbs
+        config:
+            tab:  pim-menu-shopify
+
+
+    webkul-shopify-connector-export-mapping-index-filters-list:
+        module: oro/datafilter/filters-list
+        parent: webkul-shopify-connector-export-mapping-index-grid-container
+        targetZone: filters
+
+    webkul-shopify-connector-export-mapping-index-filters-manage:
+        module: oro/datafilter/filters-button
+        parent: webkul-shopify-connector-export-mapping-index-grid-container
+        targetZone: filters
+
+    webkul-shopify-connector-export-mapping-index-pagination:
+        module: oro/datagrid/pagination-input
+        parent: webkul-shopify-connector-export-mapping-index-grid-container
+        targetZone: toolbar
+        config:
+            gridName: webkul-product-export-mapping-grid
+
+    webkul-shopify-connector-export-mapping-index-grid:
+        module: pim/form/common/index/grid
+        parent: webkul-shopify-connector-export-mapping-index-grid-container
+        position: 1000
+        config:
+            alias:  webkul-product-export-mapping-grid
+
+
+
+    webkul-shopify-connector-export-mapping-index-mass-actions:
+        module: pim/grid/mass-actions
+        parent: webkul-shopify-connector-export-mapping-index
+        targetZone: bottom-panel
+        config:
+            label: webkul_shopify_connector.entity.export_mapping.selected
+
+    webkul-shopify-connector-export-mapping-index-actions-panel:
+        module: oro/datagrid/actions-panel
+        parent: webkul-shopify-connector-export-mapping-index-mass-actions
+        targetZone: actions-panel
+
+
+
+
+
+
+
+
+
+
+
+
+
+

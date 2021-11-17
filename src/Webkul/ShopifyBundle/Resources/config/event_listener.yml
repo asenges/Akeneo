@@ -1,0 +1,24 @@
+services:
+    Webkul\ShopifyBundle\Command\ShopifyInstallationCommand:
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: console.command }
+
+    Webkul\ShopifyBundle\Command\ShopifyMigrationCommand:
+        arguments:
+            - "@doctrine.orm.entity_manager"
+        tags:
+            - { name: console.command }
+
+    wk_shopify_request_event.listener:
+        public: true
+        class: Webkul\ShopifyBundle\Listener\LoadingClassListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernalRequest }
+
+    wk_shopify_commond_event.listener:
+        public: true
+        class: Webkul\ShopifyBundle\Listener\LoadingClassListener
+        tags:
+            - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }

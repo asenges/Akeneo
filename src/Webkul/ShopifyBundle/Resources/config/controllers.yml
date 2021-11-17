@@ -1,0 +1,26 @@
+services:
+    webkul_shopify_connector.configuration.controller:
+        public: true
+        class: Webkul\ShopifyBundle\Controller\Rest\ConfigurationController
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@shopify.connector.service'
+            - '@pim_catalog.repository.currency'
+            - '@pim_enrich.repository.job_instance'
+            - '%kernel.environment%'
+            - '%kernel.logs_dir%'
+
+    webkul_shopify_connector.controller.rest.export_mapping:
+        public: true
+        class: Webkul\ShopifyBundle\Controller\Rest\ExportMappingController
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@shopify.connector.service'
+            - '@pim_catalog.repository.currency'
+            - '@pim_enrich.repository.job_instance'
+            - '%kernel.environment%'
+            - '%kernel.logs_dir%'
+        calls:
+            - [setNormalizer, ['@pim_internal_api_serializer']]
+            - [setDataMappingRepository, ['@webkul_shopify.export_mapping.repository']]
+            - [setCategoryRepo, ['@webkul_shopify.repository.category.search']]

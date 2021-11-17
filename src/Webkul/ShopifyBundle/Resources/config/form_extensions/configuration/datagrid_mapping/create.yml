@@ -1,0 +1,98 @@
+extensions:
+  #Mapping Model
+    webkul-shopify-connector-export-mapping-create-modal:
+        module: shopify/form/configuration/exportmapping/modal
+        config:
+            picture: illustrations/Groups.svg
+            labels:
+                title: webkul_shopify_connector.title
+                subTitle: webkul_shopify_connector.item.export_mapping
+            picture: illustrations/Groups.svg
+            successMessage: pim_enrich.entity.group_type.message.created
+            editRoute: webkul_shopify_data_grid
+            postUrl: webkul_shopify_data_grid_create
+ 
+    # Mapping Type
+    webkul-shopify-connector-type-create-form:
+        module: shopify/form/configuration/exportmapping/type
+        parent: webkul-shopify-connector-export-mapping-create-modal
+        targetZone: fields
+        position: 10
+        config:
+            identifier: shopifyEntityId
+            label: webkul_shopify_connector.entity.export_mapping.create_popin.type
+    
+        # API key
+    webkul-shopify-connector-shopify-category-api-url:
+        module: webkul/shopifyConnector/form/configuration/exportmapping/apiurl
+        parent: webkul-shopify-connector-export-mapping-create-modal
+        targetZone: fields
+        position: 20
+        config:
+            fieldName: apiUrl
+            label: webkul_shopify_connector.apiurlselect2
+    
+    
+    # Akeneo Select Product Mapping Field
+    webkul-shopify-connector-select-product-create-form:
+        module: shopify/configuration/exportmapping/product/akeneo
+        parent: webkul-shopify-connector-export-mapping-create-modal
+        targetZone: fields
+        position: 40
+        config:
+            identifier: akeneoEntityId
+            label: webkul_shopify_connector.entity.export_mapping.create_popin.akeneoAttribute 
+    
+    # # akeneo prouduct select
+    webkul-shopify-connector-select-product-add-product:
+        module: webkul/shopifyConnector/form/configuration/exportmapping/product/select
+        parent: webkul-shopify-connector-export-mapping-create-modal
+        targetZone: fields
+        position: 50
+        config:
+            fieldName: akeneoProductSku
+            label: pim_enrich.entity.add_product.uppercase_label
+            choiceRoute: webkul_shopify_connector_configuration_get_akeneo_product
+    
+    # # shopify product Mapping Field
+    webkul-shopify-connector-select-product-add-shopify-product:
+        module: webkul/shopifyConnector/form/configuration/exportmapping/product/shopify-select
+        parent: webkul-shopify-connector-export-mapping-create-modal
+        targetZone: fields
+        position: 56
+        config:
+            fieldName: shopifyProductId   
+            label: pim_enrich.entity.add_shopify_product.uppercase_label
+            choiceRoute: webkul_shopify_connector_configuration_get_shopify_product
+
+    # Akeneo Category Mapping Field
+    webkul-shopify-connector-select-category-create-form:
+        module: webkul/shopifyconnector/form/configuration/exportmapping/category/akeneo
+        parent: webkul-shopify-connector-export-mapping-create-modal
+        targetZone: fields
+        position: 45
+        config:
+            identifier: akeneoEntityId
+            label: webkul_shopify_connector.entity.export_mapping.create_popin.akneoCategory
+
+    # # shopify category
+    webkul-shopify-connector-select-category-add-shopify-category:
+        module: webkul/shopifyConnector/form/configuration/exportmapping/category/shopify-select
+        parent: webkul-shopify-connector-export-mapping-create-modal
+        targetZone: fields
+        position: 60
+        config:
+            fieldName: shopifyCategoryId
+            label: pim_enrich.entity.add_shopify_category.uppercase_label
+            choiceRoute: webkul_shopify_connector_get_shopify_category
+    
+    # akeneo category select
+    webkul-shopify-connector-select-category-add-category:
+        module: webkul/shopifyConnector/form/configuration/exportmapping/category/select
+        parent: webkul-shopify-connector-export-mapping-create-modal
+        targetZone: fields
+        position: 65
+        config:
+            fieldName: akeneoCategoryId
+            label: pim_enrich.entity.add_category.uppercase_label
+            choiceRoute: webkul_shopify_connector_get_akeneo_category

@@ -1,0 +1,37 @@
+batch_jobs.shopify_export.label: Shopify Export Job
+batch_jobs.shopify_category_export.label: Shopify Category only Export
+batch_jobs.shopify_category_export.category_export.label: Category Export
+batch_jobs.shopify_product_export.label: Shopify Product only export
+batch_jobs.shopify_product_export.product_export.label: Shopify Product export
+batch_jobs.shopify_import.label: Shopify Import Job
+shopify_import: Shopify Import Job
+shopify.defaults.inventory_location: Inventory Location
+webkul_shopify.product.grid.export_mappings.columns.id: Id
+webkul_shopify.product.grid.export_mappings.columns.entityType: EntityType
+webkul_shopify.product.grid.export_mappings.columns.code: Akeneo Entity Code
+webkul_shopify.product.grid.export_mappings.columns.externalId: ShopifyEntityId
+webkul_shopify.product.grid.export_mappings.columns.apiUrl: ApiUrl
+webkul_shopify.product.grid.export_mappings.columns.relatedId: Related Id
+
+webkul_shopify_connector.entity.export_mapping.selected: Selected Entity
+page_title.webkul_shopify_data_grid: Akeneo Shopify Mapping
+webkul_shopify_connector.export_mapping.index.title: Akeneo Shopify Mapping Connector
+mapping_message: Map Akeneo and Shopify products/categories
+
+webkul_shopify_connector.form.configuration.export_mapping.properties.type: Mapping Type
+# data mapping
+job_execution.summary.delete : Delete mappings
+job_execution.summary.Matched: Matched Products
+job_execution.summary.Unmatched: Unmatched Products
+
+webkul_shopify_connector.mass_action.delete.confirm_content: Are you Sure to Delete Mappings?
+pim_datagrid.mass_action.delete.label: delete mappings
+
+webkul_shopify_connector.mass_action.delete.success: Mappings Deleted Successfully
+pim_enrich.entity.datamapping.module.delete.confirm: Do you realy want to delete this mapping ?
+pim_enrich.entity.datamapping.flash.delete.success: Mapping Successfully removed.
+
+pim_enrich.entity.save.label: Save
+pim_enrich.confirmation.delete_item: Confirm deletion
+shopify.form.properties.shop_url.title: Shopify URL
+

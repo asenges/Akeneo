@@ -1,0 +1,39 @@
+parameters:
+    shopify.properties.normalizer.class: Webkul\ShopifyBundle\Connector\Processor\Normalizer\Akeneo3\PropertiesNormalizer
+
+services:
+
+    webkul_shopify.product.normalizer:
+        class: '%pim_catalog.normalizer.standard.product.class%'
+        arguments:
+            - '@webkul_shopify.properties.normalizer'
+            - '@pim_catalog.normalizer.standard.product.associations'
+            - '@pim_catalog.normalizer.standard.product.quantified_associations'
+        tags:
+            - { name: pim_serializer.normalizer, priority: 90 }
+
+    pim_catalog.normalizer.standard.product.quantified_associations:
+        class: '%pim_catalog.normalizer.standard.product.quantified_associations.class%'
+        arguments:
+            - '@pim_catalog.quantified_associations.quantified_associations_merger'
+        tags:
+            - { name: pim_standard_format_serializer.normalizer, priority: 40 }
+
+    webkul_shopify.processor.product:
+        class: 'Akeneo\Pim\Enrichment\Component\Product\Connector\Processor\Normalization\ProductProcessor'
+        arguments:
+            - '@webkul_shopify.product.normalizer'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_connector.processor.bulk_media_fetcher'
+            - '@pim_catalog.product_model.fill_missing_values'
+
+    webkul_shopify.properties.normalizer:
+        class: '%shopify.properties.normalizer.class%'
+        arguments:
+            - '@pim_catalog.filter.chained'
+            - '@pim_standard_format_serializer'
+            - '@pim_catalog.normalizer.standard.product.associations'
+            # - '@pim_catalog.repository.variant_product'
+        tags:
+            - { name: pim_serializer.normalizer, priority: 40 }
